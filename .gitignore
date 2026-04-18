@@ -3,3 +3,6 @@
 
 # dataset
 /CUAD_v1
+
+#ignoring .env file in main project folder
+.env
