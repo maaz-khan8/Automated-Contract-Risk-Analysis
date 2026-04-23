@@ -1,17 +1,21 @@
-research_task:
+extract_contract_data_task:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is {current_year}.
+    Read and process the raw text of the provided freelance computer science contract. 
+    Systematically identify and extract all key entities (parties involved, agreement dates, effective dates) and structurally isolate critical clauses. 
+    You must specifically focus on extracting text related to Intellectual Property (IP) Ownership, Non-Compete agreements, Exclusivity, Non-Solicitation, Cap on Liability, and payment or milestone terms. 
+    Do not analyze or judge the text; simply extract it accurately verbatim.
   expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
-  agent: researcher
+    A highly structured dictionary or JSON object containing the extracted contract data. 
+    It must categorize the raw text of each found clause under clear keys (e.g., 'IP_Ownership_Clause', 'Non_Compete_Clause', 'Payment_Terms') and explicitly list the contracting parties and relevant dates. If a specific clause type is not found in the text, mark its value as 'Not Present'.
+  agent: extractor_agent
 
-reporting_task:
+analyze_contract_risks_task:
   description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    Review the structured contract data and clauses provided by the Extractor Agent. 
+    Evaluate these clauses specifically from the perspective of a freelance computer science professional. 
+    Identify and flag any potential red flags, ambiguous language, scope creep, or unbalanced obligations. 
+    Pay special attention to predatory data privacy liabilities, vague milestone-based payment terms, unreasonable non-competes, and unfair Intellectual Property (IP) transfers.
+    Do not conduct external research; rely on your internal expertise to highlight which clauses look suspicious or unfavorable.
   expected_output: >
-    A fully fledged report with the main topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
+    A structured preliminary risk assessment report. For every red flag or unbalanced clause found, list the original clause name, the exact text in question, and a brief explanation of why it is potentially risky or unfair to a tech freelancer. 
+  agent: analyst_agent
