@@ -8,3 +8,17 @@ research_legal_precedents_task:
   expected_output: >
     A verified factual research report. For each originally flagged risk, this report must include: the original flagged text, the verified "fair" baseline text retrieved from the Pinecone database, and a strict, factual determination of whether the clause deviates significantly from the fair industry standard.
   agent: researcher_agent
+
+generate_final_report_task:
+  description: >
+    Review the verified factual research report provided by the Researcher Agent. 
+    Synthesize these findings to create a comprehensive, plain-English risk assessment tailored for a freelance computer science professional (e.g., software engineer, UI/UX designer). 
+    Translate all dense legal jargon into easily understandable concepts. 
+    You must evaluate the severity of the verified red flags to determine the overall safety of the agreement. 
+    Finally, formulate specific, practical negotiation points the freelancer can use to push back against the unfair clauses.
+  expected_output: >
+    A final, structured Contract Risk Report containing three distinct sections:
+    1. Overall Favorability Assessment: A clear statement on whether the contract is safe to sign, risky, or highly unfavorable.
+    2. Plain-English Risk Summary: A breakdown of the verified red flags, explaining exactly what the freelancer stands to lose (e.g., IP rights, unpaid milestones) without using complex legal terminology.
+    3. Actionable Negotiation Points: A bulleted list of specific counter-offers or wording changes the freelancer should request from the client to make the contract fair.
+  agent: critic_explainer_agent
