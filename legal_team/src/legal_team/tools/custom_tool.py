@@ -1,8 +1,11 @@
 import os
+from typing import Type # <--- ADDED IMPORT
 from crewai.tools import BaseTool
 from pydantic import BaseModel, Field
 from pinecone import Pinecone
 from llama_parse import LlamaParse
+from dotenv import load_dotenv
+load_dotenv()  # Load environment variables from .env file
 
 # ==========================================
 # TOOL 1: Pinecone RAG Search Tool
@@ -14,15 +17,16 @@ class PineconeSearchInput(BaseModel):
 class PineconeSearchTool(BaseTool):
     name: str = "Pinecone Precedent Search"
     description: str = "Searches a vector database of fair, standard computer science contracts to verify if a flagged clause is predatory or standard industry practice."
-    args_schema = PineconeSearchInput
+    
+    # THE FIX: Added ': Type[BaseModel]' type annotation
+    args_schema: Type[BaseModel] = PineconeSearchInput 
 
     def _run(self, query: str) -> str:
         # 1. Connect to Pinecone
-        pc = Pinecone(api_key=os.environ.get("PINECONE_API_KEY"))
+        pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
         index = pc.Index("contracts")
 
         # 2. Generate the embedding for the Researcher's query
-        # Notice we use "query" for the input_type here, matching the Llama model specs!
         query_embedding = pc.inference.embed(
             model="llama-text-embed-v2",
             inputs=[query],
@@ -62,7 +66,9 @@ class PDFExtractionInput(BaseModel):
 class LlamaParseTool(BaseTool):
     name: str = "LlamaParse PDF Reader"
     description: str = "Extracts highly accurate text and structure from complex legal PDF contracts."
-    args_schema = PDFExtractionInput
+    
+    # THE FIX: Added ': Type[BaseModel]' type annotation
+    args_schema: Type[BaseModel] = PDFExtractionInput 
 
     def _run(self, file_path: str) -> str:
         # Check if file exists
@@ -71,8 +77,8 @@ class LlamaParseTool(BaseTool):
             
         # Initialize LlamaParse
         parser = LlamaParse(
-            api_key=os.environ.get("LLAMAPARSE_API_KEY"),
-            result_type="markdown", # Markdown formats tables and lists cleanly for LLMs
+            api_key=os.getenv("LLAMAPARSE_API_KEY"),
+            result_type="markdown", 
             verbose=False
         )
         

@@ -30,6 +30,8 @@ research_legal_precedents_task:
     1. Querying the external Pinecone vector database for every specific red flag identified.
     2. Retrieving the corresponding "fair" baseline clauses from the CUAD dataset.
     3. Factually comparing the exact wording of the user's flagged clause against the verified fair precedents to determine if the concerns are valid or a hallucination.
+  
+    CRITICAL INSTRUCTION: You MUST use the "Pinecone Precedent Search" tool to find the baseline clauses. You are strictly forbidden from writing a Final Answer until you have successfully executed the tool. Do NOT rely on your internal knowledge.
   expected_output: >
     A Verified Factual Research Report. For each flagged risk, include:
     - The Analyst's original concern.
