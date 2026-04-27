@@ -106,7 +106,7 @@ The system focuses on the 10 contract clause types most critical for CS freelanc
 | **Document Parsing** | [LlamaParse](https://docs.llamaindex.ai/en/stable/llama_cloud/llama_parse/) |
 | **Vector Database** | [Pinecone](https://www.pinecone.io/) (Serverless, AWS us-east-1) |
 | **Embeddings** | `llama-text-embed-v2` via Pinecone Inference API (1024 dimensions, cosine) |
-| **LLM Inference** | [Groq](https://groq.com/) |
+| **LLM Inference** | [Cerebras](https://cerebras.ai/) (`llama3.1-8b`) via Groq API |
 | **Knowledge Dataset** | [CUAD v1](https://www.atticusprojectai.org/cuad) — Contract Understanding Atticus Dataset |
 | **Package Manager** | [uv](https://docs.astral.sh/uv/) |
 | **Language** | Python >=3.10, <3.14 |
@@ -153,8 +153,14 @@ Automated-Contract-Risk-Analysis/
 
 **1. Install uv** (if not already installed):
 
+**macOS / Linux:**
 ```bash
-pip install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+**Windows (PowerShell):**
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
 **2. Clone the repository and navigate to the project:**
