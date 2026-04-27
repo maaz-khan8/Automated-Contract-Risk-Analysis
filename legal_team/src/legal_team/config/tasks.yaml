@@ -1,17 +1,58 @@
-research_task:
+extract_contract_data_task:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is {current_year}.
+    Read the freelance contract PDF located at {file_path}. Focus on:
+    1. Parsing the document systematically to extract key entities (parties involved, effective dates).
+    2. Extracting the verbatim text for the following CS-relevant clauses if they exist: Intellectual Property (IP) Ownership, Non-Compete, Exclusivity, Cap on Liability, Source Code Escrow, Minimum Commitment, Non-Transferable License, and Third Party Beneficiary.
   expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
-  agent: researcher
+    A highly structured JSON object or Python dictionary containing the extracted text. 
+    Keys must be the clause names (e.g., 'Source_Code_Escrow', 'IP_Ownership') and values must be the verbatim text. 
+    If a clause is missing, mark the value as "Not Present".
+  agent: extractor_agent
 
-reporting_task:
+analyze_contract_risks_task:
   description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    Analyze the structured contract data and clauses. Focus on:
+    1. Evaluating each extracted clause strictly from the perspective of a freelance software engineer or IT consultant.
+    2. Identifying and flagging any potential red flags, ambiguous language, scope creep, or unbalanced obligations.
+    3. Spotting predatory data privacy liabilities or unfair IP transfers.
   expected_output: >
-    A fully fledged report with the main topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
+    A structured Preliminary Risk Report. For every red flag found, list:
+    - The original clause name.
+    - The exact text in question.
+    - A brief explanation of why it is potentially risky to a tech freelancer.
+  agent: analyst_agent
+  context:
+    - extract_contract_data_task
+
+research_legal_precedents_task:
+  description: >
+    Conduct factual verification on the Preliminary Risk Report. Focus on:
+    1. Querying the external Pinecone vector database for every specific red flag identified.
+    2. Retrieving the corresponding "fair" baseline clauses from the CUAD dataset.
+    3. Factually comparing the exact wording of the user's flagged clause against the verified fair precedents to determine if the concerns are valid or a hallucination.
+  
+    CRITICAL INSTRUCTION: You MUST use the "Pinecone Precedent Search" tool to find the baseline clauses. You are strictly forbidden from writing a Final Answer until you have successfully executed the tool. Do NOT rely on your internal knowledge.
+  expected_output: >
+    A Verified Factual Research Report. For each flagged risk, include:
+    - The Analyst's original concern.
+    - The verified "fair" baseline text retrieved from Pinecone.
+    - A strict, factual determination of whether the contract's clause deviates significantly from the fair industry standard.
+  agent: researcher_agent
+  context:
+    - analyze_contract_risks_task
+
+generate_final_report_task:
+  description: >
+    Analyze the verified research findings to create a final report. Focus on:
+    1. Beginning with an overall favorability assessment (safe to sign, risky, or highly unfavorable).
+    2. Synthesizing the complex legal findings into a plain-English risk summary.
+    3. Translating dense legal jargon into easily understandable concepts.
+    4. Formulating a bulleted list of specific, practical counter-offers or wording changes the freelancer should request.
+    5. Formatting the output in a professional, easy-to-read style with clear headings.
+  expected_output: >
+    A final Contract Risk Report that presents the legal research with added analysis and insights. 
+    The report should be well-structured with an Overall Favorability Assessment, a Plain-English Risk Summary, and Actionable Negotiation Points.
+  agent: critic_explainer_agent
+  context:
+    - research_legal_precedents_task
+  output_file: output/final_contract_risk_report.md

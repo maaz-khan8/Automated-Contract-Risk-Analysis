@@ -6,3 +6,5 @@
 
 #ignoring .env file in main project folder
 .env
+
+git rm -r --cached .
