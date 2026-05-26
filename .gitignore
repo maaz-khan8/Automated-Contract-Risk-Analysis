@@ -7,4 +7,7 @@
 #ignoring .env file in main project folder
 .env
 
+#ignoring sample contracts
+/SampleContracts
+
 git rm -r --cached .
