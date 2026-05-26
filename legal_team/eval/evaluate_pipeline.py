@@ -15,8 +15,8 @@ load_dotenv()
 # 1. SETUP & CONFIGURATION
 # ==========================================
 # Define directories
-CONTRACTS_DIR = "D:\\Projects\\Automated-Contract-Risk-Analysis\\SampleContracts"
-OUTPUT_DIR = "D:\\Projects\\Automated-Contract-Risk-Analysis\\output"
+CONTRACTS_DIR = "/home/sherry/Projects/Automated-Contract-Risk-Analysis/SampleContracts"
+OUTPUT_DIR = "/home/sherry/Projects/Automated-Contract-Risk-Analysis/output"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # ==========================================

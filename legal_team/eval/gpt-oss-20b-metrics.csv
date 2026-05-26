@@ -1,0 +1,11 @@
+Filename,Status,Time_Taken_Seconds,Total_Tokens,Prompt_Tokens,Completion_Tokens
+Contract4.pdf,Success,312.8,73526,59051,14475
+Contract5.pdf,Success,343.4,72908,60191,12717
+Contract7.pdf,Success,449.51,66068,56524,9544
+Contract10.pdf,Success,323.23,64622,51460,13162
+Contract8.pdf,Success,105.63,36072,26856,9216
+Contract9.pdf,Success,277.96,50662,43084,7578
+Contract1.pdf,Success,482.88,110031,94656,15375
+Contract3.pdf,Success,217.83,24677,17837,6840
+Contract6.pdf,Success,88.92,29178,20640,8538
+Contract2.pdf,Success,1350.38,209820,189198,20622
